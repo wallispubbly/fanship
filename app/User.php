@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
+
 // use App\UserInfo;
 
 class User extends Authenticatable
@@ -45,5 +47,33 @@ class User extends Authenticatable
 
     public function fandomTags() {
         return $this->hasMany('App\FandomTag');
+    }
+
+    public function fandomTagIds() {
+        return DB::table('fandom_tags')
+            ->join('fandoms', 'fandom_tags.fandom_id', '=', 'fandoms.id')
+            ->where('user_id', '=', $this->id)
+            ->pluck('fandom_id')
+            ->toArray();
+    }
+
+    public function fandomTagNames() {
+        return DB::table('fandom_tags')
+            ->join('fandoms', 'fandom_tags.fandom_id', '=', 'fandoms.id')
+            ->where('user_id', '=', $this->id)
+            ->pluck('name')
+            ->toArray();
+    }
+
+    public function compareToUser(User $user) {
+        $myTags = $this->fandomTagIds();
+
+        $theirTags = $user->fandomTagIds();
+
+        $diff = array_diff($myTags, $theirTags);
+
+        // return $diff;
+
+        return (count($myTags)-count($diff))/count($myTags);
     }
 }
