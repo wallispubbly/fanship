@@ -76,4 +76,23 @@ class User extends Authenticatable
 
         return (count($myTags)-count($diff))/count($myTags);
     }
-}
+
+    public static function cmp($x, $y) {
+        return $x[0] < $y[0];
+    }
+
+    public function getMatchesByProximity($usersToScan) {
+        $result = [];
+
+        foreach ($usersToScan as $u) {
+            // $userInfo = $u->userInfo;
+            $result[] = [$this->compareToUser($u), $u, $u->userInfo()->first()];
+        }
+
+        usort($result, 'App\User::cmp');
+
+        return $result;
+    }
+
+    
+ }

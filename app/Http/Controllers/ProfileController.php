@@ -7,6 +7,7 @@ use App\User;
 use App\UserInfo;
 use App\Fandom;
 use App\FandomTag;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -15,14 +16,20 @@ class ProfileController extends Controller
     public function show(User $user) {
         //$userInfo = $user->getUserInfo();
         // $userInfo = UserInfo::find(1)->user;
-        //dd($user->userInfo());
+        // $userProfileInfo = $user->userInfo()->get();
+        // dd(Carbon::now());
         //dd(UserInfo::find(1)->user);
 
-        $userProfileInfo = UserInfo::with('user')->find($user->id);
+        // $userProfileInfo = UserInfo::with('user')->find($user->id);
 
-        $userFandomTags = $user->fandomTags()->get();
+        // $userFandomTags = $user->fandomTags()->get();
+        // dd($userFandomTags);
         // $userFandomTags = FandomTag::with('user:id,name')->get();
         // dd($userFandomTags);
+        $userProfileInfo = $user->userInfo()->first();
+
+        
+
 
 
         // $tags = DB::table('user')
@@ -34,8 +41,8 @@ class ProfileController extends Controller
 
         // $tags = $user->fandomTagIds();
         // dd($tags);
-        $user2 = auth()->user();
-        dd($user->compareToUser($user2));
+        // $user2 = auth()->user();
+        // dd($user->compareToUser($user2));
        
 
 //                     select fandom_tags.user_id, fandoms.id, fandoms.name

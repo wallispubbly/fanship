@@ -4,3 +4,5 @@
     <li>{{$userProfileInfo->location}}
     <li>{{$userProfileInfo->bio}}
 </ul>
+
+<a href="/browse">Get your matches</a>
