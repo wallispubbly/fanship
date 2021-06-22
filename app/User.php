@@ -44,6 +44,16 @@ class User extends Authenticatable
         return $this->hasOne('App\UserInfo');
     }
 
+    public function userPhotos() {
+        return $this->hasMany('App\UserPhoto')->orderBy('primary', 'desc');
+    }
+
+    public function getPrimaryPhoto() {
+        return DB::table('user_photos')
+            ->where('user_id', $this->id)
+            ->where('primary', true)
+            ->value('filename');
+    }
 
     public function fandomTags() {
         return $this->hasMany('App\FandomTag');
@@ -86,7 +96,7 @@ class User extends Authenticatable
 
         foreach ($usersToScan as $u) {
             // $userInfo = $u->userInfo;
-            $result[] = [$this->compareToUser($u), $u, $u->userInfo()->first()];
+            $result[] = [$this->compareToUser($u), $u, $u->userInfo()->first(), $u->userPhotos()->get()->first()];
         }
 
         usort($result, 'App\User::cmp');

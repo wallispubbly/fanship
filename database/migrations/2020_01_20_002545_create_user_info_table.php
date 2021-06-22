@@ -26,6 +26,14 @@ class CreateUserInfoTable extends Migration
             
             $table->string('location');
             $table->string('bio');
+
+            // Temporary, until we enable chatting. Pf.
+            $table->string('twitter');
+            $table->string('discord');
+            $table->string('tumblr');
+            $table->string('email');
+
+
             $table->dateTime('last_active');
 
         });

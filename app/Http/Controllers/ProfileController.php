@@ -25,10 +25,12 @@ class ProfileController extends Controller
         // $userFandomTags = $user->fandomTags()->get();
         // dd($userFandomTags);
         // $userFandomTags = FandomTag::with('user:id,name')->get();
+        $userFandomTags = $user->fandomTagNames();
         // dd($userFandomTags);
         $userProfileInfo = $user->userInfo()->first();
+        $userPhotos = $user->userPhotos()->get();
 
-        
+        // dd($userProfileInfo);
 
 
 
@@ -48,6 +50,6 @@ class ProfileController extends Controller
 //                     select fandom_tags.user_id, fandoms.id, fandoms.name
 // from fandom_tags fandom_tag left join fandoms fandom on fandom_tag.fandom_id=fandom.id
         
-        return view('profiles.show', compact(['user','userProfileInfo']));
+        return view('profiles.show', compact(['user','userProfileInfo','userPhotos','userFandomTags']));
     }
 }
