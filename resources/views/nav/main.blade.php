@@ -2,17 +2,16 @@
 
 </style>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-      </a>
+      <div class="navbar-item">
+        <div class="logo-container">
+          <a href="/" class="is-family-secondary">
+            <span class="logo-element is-1">F</span><span class="logo-element is-1">A</span><span class="logo-element is-1">N</span><span class="logo-element is-1">S</span><span class="logo-element is-1">H</span><span class="logo-element is-1">I</span><span class="logo-element is-1">P</span>
+          </a>
+        </div>
+      </div>
   
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
     </div>
   
     <div id="navbarBasicExample" class="navbar-menu">
@@ -39,11 +38,14 @@
                 </a>
 
                 <div class="navbar-dropdown is-right">
+                <a href="/browse" class="navbar-item">
+                    Browse Matches
+                </a>
                 <a href="/users/{{ auth()->user()->id }}" class="navbar-item">
                     My Profile
                 </a>
                 <hr class="navbar-divider">
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <a class="navbar-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                      Log out
                 </a>
                 

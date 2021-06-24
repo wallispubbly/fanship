@@ -2,55 +2,85 @@
 
 @section('content')  
 <style>
-    img {
+    /* img {
         max-width: 100%;
         max-height: 100%;
+    } */
+    .profile {
+        max-width: 850px;
     }
-    .image-container {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        white-space: nowrap;
+    .profile a {
+        transition: .15s color;
     }
+    .profile a:hover {
+        text-decoration: none;
+        color: hsl(0, 0%, 48%);
+        transition: .15s color;
+    }
+    .container
+    {
+        min-height: 70%;
+        min-height: -webkit-calc(100% - 183px);
+        min-height: -moz-calc(100% - 183px);
+        min-height: calc(100% - 183px);
+    }
+
 </style>
-    <div class="container is-max-widescreen">
+<div class="profile mx-auto pt-4">
+    <div class="container">
        <div class="columns">
            <div class="column is-one-third">
-                <img class="is-inline-block image w-100" src="{{ asset('storage/' . $u->filename) }}">
+                <figure class="w-100">
+                    <img class="image is-rounded p-4" src="{{ asset('storage/' . $userPhotos[0]->filename) }}">
+                </figure>   
            </div>
            <div class="column">
-               <h2>{{$userProfileInfo->name}}, {{$userProfileInfo->age}}</h2>
+                <h2 class="title is-1 mt-6">{{$user->name}}, <span class="has-text-grey-light">{{$userProfileInfo->age}}</span></h2> 
+                <div class="tags">
+                    @foreach($userFandomTags as $f)
+                        @if (in_array($f, auth()->user()->fandomTagNames()))
+                            <span class="tag is-primary is-rounded is-medium">{{ $f }}</span>
+                        @else
+                            <span class="tag is-light is-rounded is-medium">{{ $f }}</span>
+                        @endif  
+                @endforeach
+                </div>
            </div>
        </div>
     </div>
-    <div class="container" style="background-color: red">
-        <h1>Profile for {{ $user->name }}</h1>
-        <div class="image-container" style="height: 400px;background-color:blue;">
-            @foreach($userPhotos as $u)
-                {{-- <div class="" --}}
-                <img class="is-inline-block image h-100" src="{{ asset('storage/' . $u->filename) }}">
-            @endforeach
-            <img class="is-inline-block image h-100" src="{{ asset('storage/' . $u->filename) }}">
-            <img class="is-inline-block image h-100" src="{{ asset('storage/' . $u->filename) }}">
-            <img class="is-inline-block image h-100" src="{{ asset('storage/' . $u->filename) }}">
 
+    {{-- Bio + Social --}}
+    <div class="container is-size-5">
+        <div class="columns px-2">
+            <div class="column px-4">
+                {{$userProfileInfo->bio}}
+                <br>
+                <br>
+                <a class="button" href="/users/edit/{{ $user->id }}">Edit My Profile</a>
+            </div>
+            <div class="column pl-4">
+                @if($userProfileInfo->twitter) 
+                    <p> <i class="fab fa-twitter fa-fw align-middle has-text-grey pr-2"></i> 
+                        <a href="https://twitter.com/{{ $userProfileInfo->twitter }}"> {{ $userProfileInfo->twitter }}</a>
+                    </p> 
+                @endif
+                @if($userProfileInfo->discord) 
+                    <p> <i class="fab fa-discord fa-fw align-middle has-text-grey pr-2"></i> {{ $userProfileInfo->discord }} </p> 
+                @endif
+                @if($userProfileInfo->tumblr) 
+                    <p> <i class="fab fa-tumblr fa-fw align-middle has-text-grey pr-2"></i> 
+                        <a href="https://{{ $userProfileInfo->tumblr }}.tumblr.com"> {{ $userProfileInfo->tumblr }} </a>
+                    </p>
+                @endif
+                @if($userProfileInfo->email) 
+                    <p> 
+                        <i class="fas fa-envelope fa-fw align-middle has-text-grey pr-2"></i> 
+                        <a href="mailto:{{ $userProfileInfo->email }}"> {{ $userProfileInfo->email }} </a>
+                    </p> 
+                @endif
+            </div>
         </div>
-        <ul>
-            <li>{{$userProfileInfo->age}}
-            <li>{{$userProfileInfo->location}}
-            <li>{{$userProfileInfo->bio}}
-        </ul>
-        <ul>
-            @if($userProfileInfo->twitter) [mail icon] {{ '@' . $userProfileInfo->twitter }} @endif
-            @if($userProfileInfo->discord) [mail icon] {{ '@' . $userProfileInfo->discord }} @endif
-            @if($userProfileInfo->tumblr) [mail icon] {{ '@' . $userProfileInfo->tumblr }} @endif
-            @if($userProfileInfo->email) [mail icon] {{ '@' . $userProfileInfo->email }} @endif
-
-        </ul>
-        @foreach($userFandomTags as $f)
-            <h5>{{ $f }}</h5>
-        @endforeach
     </div>
-
-    <a class="button" href="/browse">Get your matches</a>
+</div>
 
 @endsection

@@ -16,7 +16,8 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <script src="{{ asset('js/app.js') }}" defer></script>
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
   <meta name="theme-color" content="#fafafa">
 </head>
@@ -25,6 +26,8 @@
     @include('nav.main')
     @yield('content')
 </body>
+
+{{-- @include('nav.footer') --}}
 
 </html>
 

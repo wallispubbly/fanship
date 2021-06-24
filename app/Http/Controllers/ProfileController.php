@@ -52,4 +52,9 @@ class ProfileController extends Controller
         
         return view('profiles.show', compact(['user','userProfileInfo','userPhotos','userFandomTags']));
     }
+    public function edit() {
+        $user = auth()->user();
+
+        return view('profiles.edit', compact([$user]));
+    }
 }
